@@ -1,0 +1,52 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.1'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'in.upcode'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '20'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok'
+
+
+//	implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.15.3'
+
+	//JPA
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '3.2.1'
+
+	//postgres
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.1'
+
+
+	// devTool
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '3.2.1'
+
+
+
+
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.1'
+	implementation 'org.springframework.boot:spring-boot-starter-web:3.2.1'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.1'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
