@@ -76,4 +76,13 @@ public class PersonController {
 
 
     }
+
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity updateAPersonWithID(@PathVariable("id")Integer id){
+        personRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+
+    }
+
 }
