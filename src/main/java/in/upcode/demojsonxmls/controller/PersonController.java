@@ -10,7 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,6 +85,16 @@ public class PersonController {
         personRepository.deleteById(id);
 
         return ResponseEntity.noContent().build();
+
+    }
+
+    @PostMapping
+    ResponseEntity createAPerson(@RequestBody Person person, UriComponentsBuilder uriComponentsBuilder){
+        personRepository.save(person);
+        final Person createdPerson = personRepository.save(person);
+        final URI location = uriComponentsBuilder.path("/api/person/{id}").buildAndExpand(createdPerson.getId()).toUri();
+
+        return ResponseEntity.created(location).body(createdPerson);
 
     }
 
