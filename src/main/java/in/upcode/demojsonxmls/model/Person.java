@@ -1,17 +1,16 @@
 package in.upcode.demojsonxmls.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 public class Person {
     @Id
@@ -21,10 +20,7 @@ public class Person {
     private String name;
     private int age;
 
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    List<Car> ownedCars;
 
-
-    @Override
-    public String toString() {
-        return name + "with age: "+ age;
-    }
 }

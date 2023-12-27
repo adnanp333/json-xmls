@@ -52,6 +52,12 @@ public class PersonController {
         return ResponseEntity.badRequest().body("could not find any person:");
     }
 
+
+    @GetMapping("/{id}/cars")
+    ResponseEntity getAllCarsOwnedByAPerson(@PathVariable("id")Integer id){
+        return ResponseEntity.ok(personService.getAllCarOwnedBy(id));
+    }
+
 //    @RequestMapping("/name/{name}")
 //    Person getMeAPersonWithID(@PathVariable("name")String name){
 //        System.out.println(name);
@@ -90,7 +96,9 @@ public class PersonController {
 
     @PostMapping
     ResponseEntity createAPerson(@RequestBody Person person, UriComponentsBuilder uriComponentsBuilder){
-        personRepository.save(person);
+        System.out.println(person );
+        if(person.getOwnedCars() !=null)
+        person.getOwnedCars().forEach(car -> car.setOwner(person));
         final Person createdPerson = personRepository.save(person);
         final URI location = uriComponentsBuilder.path("/api/person/{id}").buildAndExpand(createdPerson.getId()).toUri();
 
